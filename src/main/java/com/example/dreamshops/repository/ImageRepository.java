@@ -4,7 +4,7 @@ import com.example.dreamshops.model.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
-    Image findByName(String name);
-
-    boolean existsByName(String name);
+//    Image findByName(String fileName);
+//
+//    boolean existsByName(String fileName);
 }

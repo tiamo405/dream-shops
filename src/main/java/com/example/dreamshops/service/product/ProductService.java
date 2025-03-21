@@ -1,6 +1,7 @@
 package com.example.dreamshops.service.product;
 
 import com.example.dreamshops.exceptions.ProductNotFoundException;
+import com.example.dreamshops.exceptions.ResourceNotFoundException;
 import com.example.dreamshops.model.Category;
 import com.example.dreamshops.model.Product;
 import com.example.dreamshops.repository.CategoryRepository;
@@ -46,14 +47,14 @@ public class ProductService implements IProductService {
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("Product not found"));
+        return productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found"));
     }
 
     @Override
     public Product updateProductById(UpdateProductRequest product, Long productId) {
         return productRepository.findById(productId)
                 .map(existingProduct -> productRepository.save(updateProduct(existingProduct, product)))
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
     }
     private Product updateProduct(Product existingProduct, UpdateProductRequest request) {
@@ -83,6 +84,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> getProductsByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    @Override
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategoryName(category);
     }
@@ -95,11 +101,6 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
         return productRepository.findByCategoryNameAndBrand(category, brand);
-    }
-
-    @Override
-    public List<Product> getProductsByName(String name) {
-        return productRepository.findByName(name);
     }
 
     @Override
