@@ -1,14 +1,19 @@
 package com.example.dreamshops.service.product;
 
+import com.example.dreamshops.dto.ImageDto;
+import com.example.dreamshops.dto.ProductDto;
 import com.example.dreamshops.exceptions.ProductNotFoundException;
 import com.example.dreamshops.exceptions.ResourceNotFoundException;
 import com.example.dreamshops.model.Category;
+import com.example.dreamshops.model.Image;
 import com.example.dreamshops.model.Product;
 import com.example.dreamshops.repository.CategoryRepository;
+import com.example.dreamshops.repository.ImageRepository;
 import com.example.dreamshops.repository.ProductRepository;
 import com.example.dreamshops.request.AddProductRequest;
 import com.example.dreamshops.request.UpdateProductRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,6 +25,9 @@ import java.util.Optional;
 public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ImageRepository imageRepository;
+    private final ModelMapper modelMapper;
+
     @Override
     public Product addProduct(AddProductRequest request) {
         // check if category found in the DB
@@ -116,5 +124,23 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return productRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products) {
+        return products.stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
+    @Override
+    public ProductDto convertToDto(Product product) {
+        ProductDto productDto = modelMapper.map(product, ProductDto.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream()
+                .map(image -> modelMapper.map(image, ImageDto.class))
+                .toList();
+        productDto.setImages(imageDtos);
+        return productDto;
     }
 }

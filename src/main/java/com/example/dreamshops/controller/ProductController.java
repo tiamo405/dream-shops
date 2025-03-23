@@ -1,5 +1,6 @@
 package com.example.dreamshops.controller;
 
+import com.example.dreamshops.dto.ProductDto;
 import com.example.dreamshops.exceptions.ResourceNotFoundException;
 import com.example.dreamshops.model.Product;
 import com.example.dreamshops.request.AddProductRequest;
@@ -25,9 +26,10 @@ public class ProductController {
     @GetMapping("/all")
     public ResponseEntity<ApiResponse> getAllProducts() {
         List<Product> products = productService.getAllProducts();
+        List<ProductDto> productDtos = productService.getConvertedProducts(products);
         return ResponseEntity.ok(ApiResponse.builder()
                 .message("Success")
-                .data(products)
+                .data(productDtos)
                 .build());
     }
 
@@ -35,9 +37,10 @@ public class ProductController {
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id) {
         try {
             Product product = productService.getProductById(id);
+            ProductDto productDto = productService.convertToDto(product);
             return ResponseEntity.ok(ApiResponse.builder()
                     .message("Success")
-                    .data(product)
+                    .data(productDto)
                     .build());
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(ApiResponse.builder()
@@ -46,14 +49,11 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product) {
         try {
             Product product1 = productService.addProduct(product);
-            return ResponseEntity.ok(ApiResponse.builder()
-                .message("Success")
-                .data(product1)
-                .build());
+            return ResponseEntity.ok(new ApiResponse("success", product1));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
                 ApiResponse.builder()
@@ -66,9 +66,10 @@ public class ProductController {
     public ResponseEntity<ApiResponse> updateProduct(@RequestBody UpdateProductRequest request, @PathVariable Long id) {
         try {
             Product product = productService.updateProductById(request, id);
+            ProductDto productDto = productService.convertToDto(product);
             return ResponseEntity.ok(ApiResponse.builder()
                     .message("Success")
-                    .data(product)
+                    .data(productDto)
                     .build());
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(
@@ -105,9 +106,10 @@ public class ProductController {
                         .data(null)
                         .build());
             } else {
+                List<ProductDto> productDtos = productService.getConvertedProducts(products);
                 return ResponseEntity.ok(ApiResponse.builder()
                         .message("Success")
-                        .data(products)
+                        .data(productDtos)
                         .build());
             }
         } catch (Exception e) {
@@ -129,9 +131,10 @@ public class ProductController {
                         .data(null)
                         .build());
             } else {
+                List<ProductDto> productDtos = productService.getConvertedProducts(products);
                 return ResponseEntity.ok(ApiResponse.builder()
                         .message("Success")
-                        .data(products)
+                        .data(productDtos)
                         .build());
             }
         } catch (Exception e) {
@@ -153,9 +156,10 @@ public class ProductController {
                         .data(null)
                         .build());
             } else {
+                List<ProductDto> productDtos = productService.getConvertedProducts(products);
                 return ResponseEntity.ok(ApiResponse.builder()
                         .message("Success")
-                        .data(products)
+                        .data(productDtos)
                         .build());
             }
         } catch (Exception e) {
@@ -177,9 +181,10 @@ public class ProductController {
                         .data(null)
                         .build());
             } else {
+                List<ProductDto> productDtos = productService.getConvertedProducts(products);
                 return ResponseEntity.ok(ApiResponse.builder()
                         .message("Success")
-                        .data(products)
+                        .data(productDtos)
                         .build());
             }
         } catch (Exception e) {
@@ -203,9 +208,10 @@ public class ProductController {
                         .data(null)
                         .build());
             } else {
+                List<ProductDto> productDtos = productService.getConvertedProducts(products);
                 return ResponseEntity.ok(ApiResponse.builder()
                         .message("Success")
-                        .data(products)
+                        .data(productDtos)
                         .build());
             }
         } catch (Exception e) {
@@ -226,9 +232,10 @@ public class ProductController {
                         .data(null)
                         .build());
             } else {
+                List<ProductDto> productDtos = productService.getConvertedProducts(products);
                 return ResponseEntity.ok(ApiResponse.builder()
                         .message("Success")
-                        .data(products)
+                        .data(productDtos)
                         .build());
             }
         } catch (Exception e) {
