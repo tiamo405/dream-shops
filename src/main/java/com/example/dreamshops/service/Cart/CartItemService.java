@@ -47,10 +47,12 @@ public class CartItemService implements ICartItemService {
         cart.addItem(cartItem);
         cartItemRepository.save(cartItem);
         cartRepository.save(cart);
+        // return cart + cartItem;
+
     }
 
     @Override
-    public void removeItemFromCart(Long cartId, Long productId) {
+    public void removeProductFromCart(Long cartId, Long productId) {
         Cart cart = cartService.getCart(cartId);
         CartItem itemToRemove = getCartItem(cartId, productId);
         cart.removeItem(itemToRemove);
@@ -68,14 +70,14 @@ public class CartItemService implements ICartItemService {
                     item.setQuantity(quantity);
                     item.setUnitPrice(item.getProduct().getPrice());
                     item.setTotalPrice();
-        });
+        }); // update the quantity of the item
         BigDecimal totalAmount = cart.getTotalAmount();
         cart.setTotalAmount(totalAmount);
         cartRepository.save(cart);
     }
 
     @Override
-    public CartItem getCartItem(Long cartId, Long productId) {
+    public CartItem getCartItem(Long cartId, Long productId) { // get cart item by cart id and product id
         Cart cart = cartService.getCart(cartId);
         return cart.getCartItems()
                 .stream()

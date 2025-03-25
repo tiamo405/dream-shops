@@ -1,5 +1,6 @@
 package com.example.dreamshops.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class CartItem {
     @JoinColumn(name = "product_id") // product_id is a foreign key in cart_item table
     private Product product;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id") // cart_id is a foreign key in cart_item table
     private Cart cart;

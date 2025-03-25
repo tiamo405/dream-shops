@@ -22,4 +22,4 @@ Before you begin, ensure you have met the following requirements:
 * You have installed the latest version of Maven.
 * You have installed the latest version of Node.js.
 * You have installed the latest version of npm.
-yt: 4.20.22
+yt: 5.06.55
