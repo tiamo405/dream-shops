@@ -28,7 +28,7 @@ public class CartService implements ICartService {
         return cartRepository.save(cart);
     }
 
-//    @Transactional
+    @Transactional
     @Override
     public void clearCart(Long Id) {
         Cart cart = getCart(Id);
@@ -50,5 +50,10 @@ public class CartService implements ICartService {
         newCart.setTotalAmount(BigDecimal.ZERO);
         newCart.setCartItems(new HashSet<>());
         return cartRepository.save(newCart).getId();
+    }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId);
     }
 }

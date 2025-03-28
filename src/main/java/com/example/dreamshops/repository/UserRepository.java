@@ -1,10 +1,11 @@
 package com.example.dreamshops.repository;
 
 import com.example.dreamshops.model.Cart;
+import com.example.dreamshops.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface CartRepository extends JpaRepository<Cart, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Cart findByUserId(Long userId);
+    boolean existsByEmail(String email);
 }

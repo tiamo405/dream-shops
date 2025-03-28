@@ -63,7 +63,8 @@ public class ProductController {
     }
 
     @PutMapping("/product/{id}/update")
-    public ResponseEntity<ApiResponse> updateProduct(@RequestBody UpdateProductRequest request, @PathVariable Long id) {
+    public ResponseEntity<ApiResponse> updateProduct(@RequestBody UpdateProductRequest request
+            , @PathVariable Long id) {
         try {
             Product product = productService.updateProductById(request, id);
             ProductDto productDto = productService.convertToDto(product);

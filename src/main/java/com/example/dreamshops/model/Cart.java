@@ -24,6 +24,11 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true) // One cart can have many cart items, but one cart item can have only one cart, cascade all operations, orphan removal is true  is mean that if cart item is removed from cart, it will be removed from database
     private Set<CartItem> cartItems = new HashSet<>();
 
+
+    @OneToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public void addItem(CartItem item) {
         this.cartItems.add(item);
         item.setCart(this);

@@ -61,7 +61,8 @@ public class ProductService implements IProductService {
     @Override
     public Product updateProductById(UpdateProductRequest product, Long productId) {
         return productRepository.findById(productId)
-                .map(existingProduct -> productRepository.save(updateProduct(existingProduct, product)))
+                .map(existingProduct ->
+                        productRepository.save(updateProduct(existingProduct, product)))
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
     }
@@ -73,6 +74,10 @@ public class ProductService implements IProductService {
         existingProduct.setInventory(request.getInventory());
 
         Category category = categoryRepository.findByName(request.getCategory().getName());
+        if(category == null){
+            category = new Category(request.getCategory().getName());
+            categoryRepository.save(category);
+        }
         existingProduct.setCategory(category);
         return existingProduct;
     }
