@@ -22,9 +22,10 @@ public class OrderController {
     public ResponseEntity<ApiResponse> createOrder(@RequestParam Long userId){
         try {
             Order order = orderService.placeOrder(userId);
+            OrderDto orderDto = orderService.convertToDto(order);
             return ResponseEntity.ok(ApiResponse.builder()
                     .message("Successfully created order")
-                    .data(order)
+                    .data(orderDto)
                     .build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -49,7 +50,7 @@ public class OrderController {
     @GetMapping("/{userId}/orders")
     public ResponseEntity<ApiResponse> getUserOrders(@RequestParam Long userId){
         try {
-            List<Order> orders = orderService.getUserOrders(userId);
+            List<OrderDto> orders = orderService.getUserOrders(userId);
             return ResponseEntity.ok(ApiResponse.builder()
                     .message("Successfully retrieved orders")
                     .data(orders)

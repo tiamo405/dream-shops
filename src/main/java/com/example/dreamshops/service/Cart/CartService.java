@@ -2,6 +2,7 @@ package com.example.dreamshops.service.Cart;
 
 import com.example.dreamshops.exceptions.ResourceNotFoundException;
 import com.example.dreamshops.model.Cart;
+import com.example.dreamshops.model.User;
 import com.example.dreamshops.repository.CartItemRepository;
 import com.example.dreamshops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -33,7 +34,8 @@ public class CartService implements ICartService {
     public void clearCart(Long Id) {
         Cart cart = getCart(Id);
         cartItemRepository.deleteAllByCartId(Id);
-        cart.getCartItems().clear();
+        cart.clearCart();
+//        cart.getTotalAmount(0);
         cartRepository.deleteById(Id);
 
     }
@@ -45,11 +47,13 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public Long initializeNewCart() {
-        Cart newCart = new Cart();
-        newCart.setTotalAmount(BigDecimal.ZERO);
-        newCart.setCartItems(new HashSet<>());
-        return cartRepository.save(newCart).getId();
+    public Cart initializeNewCart(User user) {
+        return Optional.ofNullable(getCartByUserId(user.getId()))
+                .orElseGet(() -> {
+                    Cart cart = new Cart();
+                    cart.setUser(user);
+                    return cartRepository.save(cart);
+                });
     }
 
     @Override

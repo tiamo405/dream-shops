@@ -1,5 +1,6 @@
 package com.example.dreamshops.service.user;
 
+import com.example.dreamshops.dto.UserDto;
 import com.example.dreamshops.model.User;
 import com.example.dreamshops.request.CreateUserRequest;
 import com.example.dreamshops.request.UserUpdateRequest;
@@ -9,4 +10,6 @@ public interface IUserService {
     User createUser(CreateUserRequest request);
     User updateUser(UserUpdateRequest request, Long userId);
     void deleteUser(Long userId);
+
+    UserDto convertUserToDto(User user);
 }

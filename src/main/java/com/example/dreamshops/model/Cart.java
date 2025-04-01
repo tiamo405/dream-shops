@@ -54,5 +54,9 @@ public class Cart {
         updateTotalAmount(); // Gọi phương thức tính toán trước
         return this.totalAmount;
     }
+    public void clearCart(){
+        this.cartItems.clear();
+        updateTotalAmount();
+    }
 
 }

@@ -18,6 +18,7 @@ import java.util.List;
 //@NoArgsConstructor // Lombok annotation to generate no-args constructor
                     // tieng viet: tao constructor khong co tham so
 public class ProductDto {
+    private Long id;
     private String name;
     private  String brand;
     private String description;

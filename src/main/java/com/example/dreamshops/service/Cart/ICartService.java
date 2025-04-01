@@ -1,6 +1,7 @@
 package com.example.dreamshops.service.Cart;
 
 import com.example.dreamshops.model.Cart;
+import com.example.dreamshops.model.User;
 
 import java.math.BigDecimal;
 
@@ -10,7 +11,7 @@ public interface ICartService {
     BigDecimal getTotalPrice(Long cartId);
 
 
-    Long initializeNewCart();
+    Cart initializeNewCart(User user);
 
     Cart getCartByUserId(Long userId);
 }
