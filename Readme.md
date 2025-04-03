@@ -1,17 +1,23 @@
 # Spring Boot, Spring Security, JWT Course – Shopping Cart Backend Java Project
 This is the backend project for the Spring Boot, Spring Security, JWT Course – Shopping Cart. This project is built using Java, Spring Boot, Spring Security, JWT, and MySQL.
+## Review project
+This project is a simple shopping cart application that allows users to register, login, and manage their shopping cart. 
+### EER Diagram
+![img](./EER-diagram.png)
+### Features
+* User registration and login
+* JWT authentication
+* User roles (admin, user)
+* Product management (CRUD operations)
+* Shopping cart management (CRUD operations)
+* Order management (CRUD operations)
 ## Getting Started
 To get started you can simply clone the repository:
 
 ```
-git clone 
+git clone github.com:yourusername/shopping-cart-backend.git
 ```
-```aiignore
-npm install
-```
-```aiignore
-npm start
-```
+
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
 * You have installed the latest version of Java 17+
@@ -22,4 +28,4 @@ Before you begin, ensure you have met the following requirements:
 * You have installed the latest version of Maven.
 * You have installed the latest version of Node.js.
 * You have installed the latest version of npm.
-yt: 6.22.59
+* [Youtube](https://www.youtube.com/watch?v=oGhc5Z-WJSw)
